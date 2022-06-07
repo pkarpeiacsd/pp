@@ -1,0 +1,29 @@
+
+apt-get install -y xz-utils gcc libc6-dev pkg-config make automake iptables-dev  linux-headers-4.19.0-5-amd64 libtext-csv-xs-perl libnet-cidr-lite-perl unzip
+cd /tmp/
+wget http://192.168.1.151/sw/sec_tools/firewall/iptables/xtables-addons-3.2.tar.xz
+tar -xf xtables-addons-3.2.tar.xz
+cd tar -xf xtables-addons-3.2
+./configure
+make
+make install
+nano /usr/local/libexec/xtable-addons/xt_geoip_dl
+#replace this path
+	#wget http://192.168.1.151/sw/sec_tools/firewall/iptables/GeoLite2-Country-CSV_20191112.zip
+	#unzip GeoLite2-Country-CSV_20191112.zip
+cd 
+mkdir xtables
+mkdir /usr/share/xt_geoip
+cd xtables
+/usr/local/libexec/xtables-addons/xt_geoip_dl
+cd GeoLite2-Country
+/usr/local/libexec/xtables-addons/xt_geoip_build -D /usr/share/xt_geoip/
+cd
+depmod -a
+
+iptables -A INPUT -m geoip --src-cc CN -j LOG --log-level debug --log-prefix "|this is trsffuc cjabl|"
+
+/usr/local/libexec/xtables
+sudo depmod -a
+
+sudo iptables -A INPUT -m groip --src-cc -j LOG --log-level debug --log-prefix "|traffic|"

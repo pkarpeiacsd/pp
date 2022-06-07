@@ -1,0 +1,45 @@
+Nginix
+
+proxy--------------------------------------------------------
+
+apt install nginx
+rm /etc/nginx/sites-enabled/*
+touch /etc/nginx/sites-available/rp.conf
+ 
+sh -c    'echo "server {
+	listen 80;
+	location / {
+		proxy_pass http://www.youtube.com;
+		}
+	}" >> /etc/nginx/sites-available/rp.conf'
+ln -s /etc/nginx/sites-available/rp.conf /etc/nginx/sites-enabled/
+systemctl restart nginx
+nginx -t -s /etc/nginx/nginx.conf
+systemctl status nginx
+
+
+
+reverse prox----------------------------------------------------
+
+on apache2 deb
+
+ProxyPreserveHost On
+ProxyPassMatch ^/internal/(.*[.](jpg|png))$ http://192.168.80.141/public/$1
+a2enmod proxy_http
+/var/www/html
+index
+	public
+	    inclcuded1
+		hello.conf
+		one.jpg
+		one.png
+		one.txt
+
+
+
+
+
+
+
+
+
